@@ -17,7 +17,7 @@ async function main() {
         const readmeFilePath = path.join(localeFolder, 'README.md')
 
         // create output zip file
-        const output = fs.createWriteStream(__dirname + '/locale.zip');
+        const output = fs.createWriteStream('locale.zip');
         const archive = archiver('zip')
         archive.pipe(output)
 
