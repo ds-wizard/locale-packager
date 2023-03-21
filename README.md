@@ -16,10 +16,16 @@ $ npm install @ds-wizard/locale-packager
 
 ## Usage
 
-Once the tool is installed, it can be used as follows:
+Locale packager can be used to create locale either in folder:
 
 ```
-$ npx dsw-locale-packager <source folder>
+$ npx dsw-locale-packager /path/to/source-folder -o /path/to/output-folder
+```
+
+Or as a zip file:
+
+```
+$ npx dsw-locale-packager /path/to/source-folder -z -o /path/to/output.zip
 ```
 
 The source folder should contain the following files, as in for example [here](https://github.com/ds-wizard/wizard-client-locales/tree/v3.20.1/locales/cs):
