@@ -1,12 +1,16 @@
 {
   "name": "@ds-wizard/locale-packager",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A command line tool for creating locale packages for the Data Stewardship Wizard.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jan Slifka",
+  "contributors": [
+    "Jan Slifka",
+    "Marek Suchánek"
+  ],
   "license": "Apache-2.0",
   "bin": {
     "dsw-locale-packager": "./main.js"
