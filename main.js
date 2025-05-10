@@ -83,16 +83,40 @@ async function main() {
 
         // locale source files
         const localeFolder = options.src
-        const poFilePath = path.join(localeFolder, 'locale.po')
+
+        // read PO files from the locale folder
+        const localeFiles = await fs.promises.readdir(localeFolder)
+        const poFiles = localeFiles.filter(file => file.endsWith('.po') && file !== 'mail.po')
+        const mailPoFilePath = path.join(localeFolder, 'mail.po')
         const jsonFilePath = path.join(localeFolder, 'locale.json')
         const readmeFilePath = path.join(localeFolder, 'README.md')
 
-        // convert PO file to JSON and add it to the zip file
-        const poFileText = await fs.promises.readFile(poFilePath, { encoding: 'utf8' })
-        const jsonData = po2json.parse(poFileText, { format: 'jed' })
-        await output.addFile(JSON.stringify(jsonData), 'locale/translation.json')
+        // convert each PO file (except mail) to JSON and add it to the zip file
+        if (poFiles.length === 0) {
+            console.warn(`No PO files found in ${localeFolder}.`)
+        } else if (!poFiles.includes('wizard.po')) {
+            console.warn(`wizard.po file not found in ${localeFolder}.`)
+        }
+        for (const poFile of poFiles) {
+            const poFilePath = path.join(localeFolder, poFile)
+            const poFileText = await fs.promises.readFile(poFilePath, { encoding: 'utf8' })
+            const jsonData = po2json.parse(poFileText, { format: 'jed' })
+            await output.addFile(JSON.stringify(jsonData), `locale/${poFile.replace('.po', '.json')}`)
+        }
+
+        // add mail PO file to the zip file (without conversion)
+        if (!fs.existsSync(mailPoFilePath)) {
+            console.warn(`Mail PO file not found at ${mailPoFilePath}.`)
+        } else {
+            const mailPoFileText = await fs.promises.readFile(mailPoFilePath, { encoding: 'utf8' })
+            await output.addFile(mailPoFileText, 'locale/mail.po')
+        }
 
         // load locale metadata and readme
+        if (!fs.existsSync(jsonFilePath)) {
+            console.error(`Locale JSON file not found at ${jsonFilePath}.`)
+            return
+        }
         const localeJsonText = await fs.promises.readFile(jsonFilePath, { encoding: 'utf8' })
         const localeJson = JSON.parse(localeJsonText)
         const readmeText = await fs.promises.readFile(readmeFilePath, { encoding: 'utf8' })
