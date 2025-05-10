@@ -12,8 +12,8 @@
     "dsw-locale-packager": "./main.js"
   },
   "dependencies": {
-    "archiver": "^5.3.1",
-    "command-line-args": "^5.2.1",
-    "po2json": "^1.0.0-beta"
+    "archiver": "^7.0.1",
+    "command-line-args": "^6.0.1",
+    "@connectedcars/po2json": "^2.0.0"
   }
 }

@@ -4,7 +4,7 @@ const archiver = require('archiver')
 const commandLineArgs = require('command-line-args')
 const fs = require('fs')
 const path = require('path')
-const po2json = require('po2json')
+const po2json = require('@connectedcars/po2json')
 
 
 class OutputWriter {
